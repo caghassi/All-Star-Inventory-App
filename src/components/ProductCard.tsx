@@ -3,6 +3,7 @@
 import type { Product } from "@/lib/types";
 import Barcode from "./Barcode";
 import DeleteButton from "./DeleteButton";
+import PrintLabelButton from "./PrintLabelButton";
 
 export default function ProductCards({ products }: { products: Product[] }) {
   return (
@@ -48,6 +49,7 @@ export default function ProductCards({ products }: { products: Product[] }) {
               <Barcode value={product.sku} />
             </div>
             <div className="mt-3 flex gap-2 justify-end">
+              <PrintLabelButton product={product} />
               <a
                 href={`/products/${product.id}/edit`}
                 className="text-sm px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 transition-colors"

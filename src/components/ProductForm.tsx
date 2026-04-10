@@ -89,6 +89,23 @@ export default function ProductForm({ product }: ProductFormProps) {
 
       <div>
         <label
+          htmlFor="category"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
+          Category
+        </label>
+        <input
+          type="text"
+          id="category"
+          name="category"
+          defaultValue={product?.category ?? "Uncategorized"}
+          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="e.g. Electronics, Clothing, Food"
+        />
+      </div>
+
+      <div>
+        <label
           htmlFor="description"
           className="block text-sm font-medium text-gray-700 mb-1"
         >

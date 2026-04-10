@@ -34,12 +34,32 @@ export default function RootLayout({
               <a href="/" className="text-xl font-bold text-gray-900">
                 All Star Inventory
               </a>
-              <a
-                href="/products/new"
-                className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                + Add Product
-              </a>
+              <nav className="flex items-center gap-4">
+                <a
+                  href="/scan"
+                  className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Scan
+                </a>
+                <a
+                  href="/print"
+                  className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Print Labels
+                </a>
+                <a
+                  href="/reports"
+                  className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Reports
+                </a>
+                <a
+                  href="/products/new"
+                  className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  + Add Product
+                </a>
+              </nav>
             </div>
           </div>
         </header>
