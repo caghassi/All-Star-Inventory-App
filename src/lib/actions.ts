@@ -160,6 +160,7 @@ export async function adjustQuantity(
   });
 
   revalidatePath("/");
+  revalidatePath(`/products/${productId}`);
   return { success: true, newQty };
 }
 
