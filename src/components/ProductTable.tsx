@@ -3,6 +3,7 @@
 import type { Product } from "@/lib/types";
 import Barcode from "./Barcode";
 import DeleteButton from "./DeleteButton";
+import PrintLabelButton from "./PrintLabelButton";
 
 export default function ProductTable({ products }: { products: Product[] }) {
   return (
@@ -79,6 +80,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
               </td>
               <td className="px-4 py-3 text-right">
                 <div className="flex justify-end gap-2">
+                  <PrintLabelButton product={product} />
                   <a
                     href={`/products/${product.id}/edit`}
                     className="text-sm text-blue-600 hover:text-blue-800"
