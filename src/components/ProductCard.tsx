@@ -25,7 +25,14 @@ export default function ProductCards({ products }: { products: Product[] }) {
             </div>
           )}
           <div className="p-4">
-            <h3 className="font-semibold text-lg truncate">{product.name}</h3>
+            <h3 className="font-semibold text-lg truncate">
+              <a
+                href={`/products/${product.id}`}
+                className="text-blue-600 hover:text-blue-800 hover:underline"
+              >
+                {product.name}
+              </a>
+            </h3>
             <p className="text-sm text-gray-500 font-mono mt-1">
               {product.sku}
             </p>

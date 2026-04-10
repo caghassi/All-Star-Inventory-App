@@ -53,7 +53,14 @@ export default function ProductTable({ products }: { products: Product[] }) {
                   </div>
                 )}
               </td>
-              <td className="px-4 py-3 font-medium">{product.name}</td>
+              <td className="px-4 py-3 font-medium">
+                <a
+                  href={`/products/${product.id}`}
+                  className="text-blue-600 hover:text-blue-800 hover:underline"
+                >
+                  {product.name}
+                </a>
+              </td>
               <td className="px-4 py-3 font-mono text-sm text-gray-600">
                 {product.sku}
               </td>
