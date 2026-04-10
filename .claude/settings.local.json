@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --no-import-alias --use-npm --turbopack)",
+      "Bash(cmd.exe /c \"where node 2>NUL & where npm 2>NUL & where npx 2>NUL & node --version 2>NUL\")",
+      "Bash(winget --version)",
+      "Bash(cmd.exe /c \"winget --version\")",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"/c/Program Files/nodejs:$PATH\")",
+      "Bash(npm --version)",
+      "Bash(npx create-next-app@latest temp-scaffold --typescript --tailwind --eslint --app --src-dir --no-import-alias --use-npm --turbopack)",
+      "Bash(shopt -s dotglob)",
+      "Bash(mv temp-scaffold/* .)",
+      "Bash(rmdir temp-scaffold:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\")",
+      "Bash(gh auth:*)"
+    ]
+  }
+}
