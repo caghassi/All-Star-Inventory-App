@@ -10,7 +10,6 @@ export async function createProduct(formData: FormData) {
   const name = formData.get("name") as string;
   const sku = formData.get("sku") as string;
   const description = (formData.get("description") as string) || null;
-  const category = (formData.get("category") as string) || "Uncategorized";
   const quantity = parseInt(formData.get("quantity") as string, 10);
   const price = parseFloat(formData.get("price") as string);
   const imageFile = formData.get("image") as File | null;
@@ -34,7 +33,7 @@ export async function createProduct(formData: FormData) {
 
   const { data: product, error } = await supabase
     .from("products")
-    .insert({ name, sku, description, category, quantity, price, image_url })
+    .insert({ name, sku, description, quantity, price, image_url })
     .select("id")
     .single();
 
@@ -61,7 +60,6 @@ export async function updateProduct(id: string, formData: FormData) {
   const name = formData.get("name") as string;
   const sku = formData.get("sku") as string;
   const description = (formData.get("description") as string) || null;
-  const category = (formData.get("category") as string) || "Uncategorized";
   const quantity = parseInt(formData.get("quantity") as string, 10);
   const price = parseFloat(formData.get("price") as string);
   const imageFile = formData.get("image") as File | null;
@@ -93,7 +91,7 @@ export async function updateProduct(id: string, formData: FormData) {
 
   const { error } = await supabase
     .from("products")
-    .update({ name, sku, description, category, quantity, price, image_url })
+    .update({ name, sku, description, quantity, price, image_url })
     .eq("id", id);
 
   if (error) {
