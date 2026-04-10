@@ -15,7 +15,18 @@
       "Bash(npm install:*)",
       "Bash(npm run:*)",
       "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\")",
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(vercel --version)",
+      "Bash(cmd.exe /c \"npm --version\")",
+      "Bash(cmd.exe /c \"node --version\")",
+      "Bash(cmd.exe /c \"npx --version\")",
+      "Bash(\"/c/Program Files/nodejs/npm\" install -g vercel)",
+      "Bash(export PATH=\"/c/Users/ChristopherAghassi/AppData/Roaming/npm:/c/Program Files/nodejs:$PATH\")",
+      "Bash(vercel whoami:*)",
+      "Read(//c/Users/ChristopherAghassi/AppData/Local/Temp/claude/c--Users-ChristopherAghassi-All-Star-Inventory-App/66894fe8-7128-456e-bed2-5acfd0a180d1/tasks/**)",
+      "Bash(vercel --yes)",
+      "Bash(vercel --yes --name all-star-inventory-app)",
+      "Bash(vercel env:*)"
     ]
   }
 }
