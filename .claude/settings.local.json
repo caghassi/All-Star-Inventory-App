@@ -26,7 +26,9 @@
       "Read(//c/Users/ChristopherAghassi/AppData/Local/Temp/claude/c--Users-ChristopherAghassi-All-Star-Inventory-App/66894fe8-7128-456e-bed2-5acfd0a180d1/tasks/**)",
       "Bash(vercel --yes)",
       "Bash(vercel --yes --name all-star-inventory-app)",
-      "Bash(vercel env:*)"
+      "Bash(vercel env:*)",
+      "Bash(vercel --prod --yes)",
+      "Bash(vercel --prod --yes --force)"
     ]
   }
 }
