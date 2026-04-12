@@ -25,22 +25,49 @@ export default function ScanClient() {
     let scanner: { clear: () => Promise<void>; stop: () => Promise<void> } | null = null;
 
     async function startScanner() {
-      const { Html5Qrcode } = await import("html5-qrcode");
+      const { Html5Qrcode, Html5QrcodeSupportedFormats } = await import(
+        "html5-qrcode"
+      );
 
       if (!scannerRef.current) return;
 
       const scannerId = "barcode-scanner";
       scannerRef.current.id = scannerId;
 
-      const html5QrCode = new Html5Qrcode(scannerId);
+      // Explicitly enable 1D barcode formats. Without this, html5-qrcode
+      // only reliably decodes QR codes — CODE128 labels would not scan.
+      const html5QrCode = new Html5Qrcode(scannerId, {
+        formatsToSupport: [
+          Html5QrcodeSupportedFormats.CODE_128,
+          Html5QrcodeSupportedFormats.CODE_39,
+          Html5QrcodeSupportedFormats.CODE_93,
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8,
+          Html5QrcodeSupportedFormats.UPC_A,
+          Html5QrcodeSupportedFormats.UPC_E,
+          Html5QrcodeSupportedFormats.ITF,
+          Html5QrcodeSupportedFormats.CODABAR,
+          Html5QrcodeSupportedFormats.QR_CODE,
+        ],
+        verbose: false,
+      });
       html5QrCodeRef.current = html5QrCode;
 
       try {
         await html5QrCode.start(
           { facingMode: "environment" },
           {
-            fps: 10,
-            qrbox: { width: 300, height: 150 },
+            fps: 15,
+            // Wider box suits 1D barcodes (which are horizontal and long)
+            qrbox: (viewfinderWidth: number, viewfinderHeight: number) => {
+              const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+              const width = Math.floor(
+                Math.min(viewfinderWidth * 0.9, minEdge * 2.5)
+              );
+              const height = Math.floor(minEdge * 0.5);
+              return { width, height };
+            },
+            aspectRatio: 1.7778,
           },
           async (decodedText: string) => {
             // Stop scanning immediately
