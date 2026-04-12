@@ -1,5 +1,6 @@
 import { getSupabase, isConfigured } from "@/lib/supabase";
 import Barcode from "@/components/Barcode";
+import PrintDrawerLabels from "@/components/PrintDrawerLabels";
 import { DRAWER_COUNT, drawerBarcodeValue } from "@/lib/drawers";
 
 export const dynamic = "force-dynamic";
@@ -46,12 +47,15 @@ export default async function DrawersPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Drawers</h1>
-        <p className="text-sm text-gray-600 mt-1">
-          Print these barcode labels and stick them on each drawer. Scan a
-          drawer label to see its contents and perform an inventory true-up.
-        </p>
+      <div className="mb-6 flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Drawers</h1>
+          <p className="text-sm text-gray-600 mt-1">
+            Print these barcode labels and stick them on each drawer. Scan a
+            drawer label to see its contents and perform an inventory true-up.
+          </p>
+        </div>
+        <PrintDrawerLabels drawers={drawers} />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

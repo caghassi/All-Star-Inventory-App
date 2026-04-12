@@ -3,6 +3,7 @@ import type { Product } from "@/lib/types";
 import { notFound } from "next/navigation";
 import Barcode from "@/components/Barcode";
 import DrawerTrueUp from "@/components/DrawerTrueUp";
+import PrintDrawerLabels from "@/components/PrintDrawerLabels";
 import { DRAWER_COUNT, drawerBarcodeValue } from "@/lib/drawers";
 
 export const dynamic = "force-dynamic";
@@ -64,6 +65,13 @@ export default async function DrawerDetailPage({
             Drawer Label
           </p>
           <Barcode value={drawerBarcodeValue(drawerNumber)} />
+          <div className="mt-2 flex justify-end">
+            <PrintDrawerLabels
+              drawers={[drawerNumber]}
+              buttonLabel="Print Label"
+              className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+            />
+          </div>
         </div>
       </div>
 
