@@ -20,22 +20,28 @@ export default function PrintDrawerLabels({
     const labelHtml = drawers
       .map(
         (n, i) => `
-      <div class="label-cell">
-        <div class="label-heading">DRAWER</div>
-        <div class="label-number">${n}</div>
-        <svg id="bc-${i}"></svg>
-        <div class="label-code">${drawerBarcodeValue(n)}</div>
-      </div>`
+      <section class="label">
+        <div class="left">
+          <div class="heading">DRAWER</div>
+          <div class="number">${n}</div>
+        </div>
+        <div class="right">
+          <svg id="bc-${i}"></svg>
+          <div class="code">${drawerBarcodeValue(n)}</div>
+        </div>
+      </section>`
       )
       .join("");
 
     const barcodeScripts = drawers
       .map(
         (n, i) =>
-          `JsBarcode("#bc-${i}", "${drawerBarcodeValue(n)}", { format: "CODE128", width: 2, height: 60, displayValue: false, margin: 4 });`
+          `JsBarcode("#bc-${i}", "${drawerBarcodeValue(n)}", { format: "CODE128", width: 2, height: 55, displayValue: false, margin: 0 });`
       )
       .join("\n");
 
+    // Sized for Rollo thermal printer — 1" x 4" label, landscape
+    // One label per page so the printer feeds correctly between each label
     win.document.write(`
       <!DOCTYPE html>
       <html>
@@ -43,51 +49,77 @@ export default function PrintDrawerLabels({
         <title>Drawer Labels</title>
         <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"><\/script>
         <style>
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { font-family: sans-serif; padding: 0.25in; }
-          .label-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.15in;
+          @page {
+            size: 4in 1in;
+            margin: 0;
           }
-          .label-cell {
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          html, body { width: 4in; font-family: sans-serif; }
+          .label {
             width: 4in;
-            height: 2.5in;
-            padding: 0.2in;
-            border: 1px dashed #bbb;
+            height: 1in;
+            padding: 0.06in 0.1in;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.12in;
+            page-break-after: always;
+            break-after: page;
+            overflow: hidden;
+          }
+          .label:last-child {
+            page-break-after: auto;
+            break-after: auto;
+          }
+          .left {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            page-break-inside: avoid;
+            flex-shrink: 0;
+            width: 1.1in;
           }
-          .label-heading {
-            font-size: 12pt;
-            letter-spacing: 0.15em;
-            color: #555;
+          .heading {
+            font-size: 8pt;
+            letter-spacing: 0.12em;
+            color: #000;
             font-weight: 600;
-          }
-          .label-number {
-            font-size: 48pt;
-            font-weight: 800;
             line-height: 1;
-            margin: 6px 0 10px;
           }
-          .label-code {
+          .number {
+            font-size: 44pt;
+            font-weight: 900;
+            line-height: 1;
+            margin-top: 2px;
+          }
+          .right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+          }
+          .code {
             font-family: monospace;
-            font-size: 9pt;
-            color: #666;
-            margin-top: 4px;
+            font-size: 8pt;
+            color: #000;
+            margin-top: 2px;
           }
-          svg { max-width: 100%; }
-          @media print {
-            body { padding: 0; }
-            .label-cell { border-color: transparent; }
+          svg { max-width: 100%; height: auto; display: block; }
+          /* Preview-only styling that is hidden when printing */
+          @media screen {
+            body { background: #f5f5f5; padding: 12px; }
+            .label {
+              background: white;
+              border: 1px dashed #bbb;
+              margin-bottom: 8px;
+            }
           }
         </style>
       </head>
       <body>
-        <div class="label-grid">${labelHtml}</div>
+        ${labelHtml}
         <script>
           ${barcodeScripts}
           setTimeout(function() { window.print(); }, 500);
