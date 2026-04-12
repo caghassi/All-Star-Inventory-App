@@ -23,6 +23,9 @@ export default function ProductTable({ products }: { products: Product[] }) {
             <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">
               Barcode
             </th>
+            <th className="text-center px-4 py-3 text-sm font-medium text-gray-600">
+              Drawer
+            </th>
             <th className="text-right px-4 py-3 text-sm font-medium text-gray-600">
               Qty
             </th>
@@ -68,6 +71,18 @@ export default function ProductTable({ products }: { products: Product[] }) {
                 <div className="max-w-[150px]">
                   <Barcode value={product.sku} />
                 </div>
+              </td>
+              <td className="px-4 py-3 text-center">
+                {product.drawer_number ? (
+                  <a
+                    href={`/drawers/${product.drawer_number}`}
+                    className="inline-block px-2 py-1 rounded text-sm bg-blue-50 text-blue-700 hover:bg-blue-100"
+                  >
+                    #{product.drawer_number}
+                  </a>
+                ) : (
+                  <span className="text-gray-400 text-sm">—</span>
+                )}
               </td>
               <td className="px-4 py-3 text-right">
                 <span

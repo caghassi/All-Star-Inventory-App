@@ -36,6 +36,14 @@ export default function ProductCards({ products }: { products: Product[] }) {
             <p className="text-sm text-gray-500 font-mono mt-1">
               {product.sku}
             </p>
+            {product.drawer_number && (
+              <a
+                href={`/drawers/${product.drawer_number}`}
+                className="inline-block mt-1 text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-700 hover:bg-blue-100"
+              >
+                Drawer {product.drawer_number}
+              </a>
+            )}
             <div className="mt-2 flex items-center justify-between">
               <span
                 className={`inline-block px-2 py-1 rounded text-sm ${

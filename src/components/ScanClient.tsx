@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { getProductBySku } from "@/lib/actions";
 import type { Product } from "@/lib/types";
+import { parseDrawerBarcode } from "@/lib/drawers";
 import QuickAdjustDialog from "./QuickAdjustDialog";
 
 type ScanState =
@@ -11,6 +13,7 @@ type ScanState =
   | { mode: "not_found"; scannedValue: string };
 
 export default function ScanClient() {
+  const router = useRouter();
   const [state, setState] = useState<ScanState>({ mode: "scanning" });
   const [error, setError] = useState<string | null>(null);
   const scannerRef = useRef<HTMLDivElement>(null);
@@ -45,6 +48,13 @@ export default function ScanClient() {
               await html5QrCode.stop();
             } catch {
               // Ignore stop errors
+            }
+
+            // Check if this is a drawer barcode — if so, navigate to it
+            const drawerNumber = parseDrawerBarcode(decodedText);
+            if (drawerNumber !== null) {
+              router.push(`/drawers/${drawerNumber}`);
+              return;
             }
 
             // Look up product by SKU

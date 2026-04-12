@@ -42,6 +42,12 @@ export default function RootLayout({
                   Scan
                 </a>
                 <a
+                  href="/drawers"
+                  className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Drawers
+                </a>
+                <a
                   href="/print"
                   className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
                 >

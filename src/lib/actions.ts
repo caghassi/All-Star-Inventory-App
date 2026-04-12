@@ -12,6 +12,9 @@ export async function createProduct(formData: FormData) {
   const description = (formData.get("description") as string) || null;
   const quantity = parseInt(formData.get("quantity") as string, 10);
   const price = parseFloat(formData.get("price") as string);
+  const drawerRaw = formData.get("drawer_number") as string;
+  const drawer_number =
+    drawerRaw && drawerRaw !== "" ? parseInt(drawerRaw, 10) : null;
   const imageFile = formData.get("image") as File | null;
 
   let image_url: string | null = null;
@@ -33,7 +36,7 @@ export async function createProduct(formData: FormData) {
 
   const { data: product, error } = await supabase
     .from("products")
-    .insert({ name, sku, description, quantity, price, image_url })
+    .insert({ name, sku, description, quantity, price, image_url, drawer_number })
     .select("id")
     .single();
 
@@ -62,6 +65,9 @@ export async function updateProduct(id: string, formData: FormData) {
   const description = (formData.get("description") as string) || null;
   const quantity = parseInt(formData.get("quantity") as string, 10);
   const price = parseFloat(formData.get("price") as string);
+  const drawerRaw = formData.get("drawer_number") as string;
+  const drawer_number =
+    drawerRaw && drawerRaw !== "" ? parseInt(drawerRaw, 10) : null;
   const imageFile = formData.get("image") as File | null;
   const existingImageUrl = formData.get("existing_image_url") as string | null;
 
@@ -91,7 +97,7 @@ export async function updateProduct(id: string, formData: FormData) {
 
   const { error } = await supabase
     .from("products")
-    .update({ name, sku, description, quantity, price, image_url })
+    .update({ name, sku, description, quantity, price, image_url, drawer_number })
     .eq("id", id);
 
   if (error) {
@@ -161,6 +167,54 @@ export async function adjustQuantity(
 
   revalidatePath("/");
   revalidatePath(`/products/${productId}`);
+  return { success: true, newQty };
+}
+
+export async function setQuantity(
+  productId: string,
+  newQuantity: number,
+  reason: string
+) {
+  const supabase = getSupabase();
+
+  const { data: product, error: fetchError } = await supabase
+    .from("products")
+    .select("quantity, drawer_number")
+    .eq("id", productId)
+    .single();
+
+  if (fetchError || !product) {
+    return { error: "Product not found" };
+  }
+
+  const newQty = Math.max(0, Math.floor(newQuantity));
+
+  if (newQty === product.quantity) {
+    return { success: true, newQty, unchanged: true };
+  }
+
+  const { error: updateError } = await supabase
+    .from("products")
+    .update({ quantity: newQty })
+    .eq("id", productId);
+
+  if (updateError) {
+    return { error: updateError.message };
+  }
+
+  await supabase.from("inventory_log").insert({
+    product_id: productId,
+    change_amount: newQty - product.quantity,
+    previous_qty: product.quantity,
+    new_qty: newQty,
+    reason: reason || "Inventory true-up",
+  });
+
+  revalidatePath("/");
+  revalidatePath(`/products/${productId}`);
+  if (product.drawer_number) {
+    revalidatePath(`/drawers/${product.drawer_number}`);
+  }
   return { success: true, newQty };
 }
 

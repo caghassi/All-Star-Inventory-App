@@ -84,6 +84,23 @@ export default async function ProductDetailPage({
                     </span>
                   </p>
                 </div>
+                <div>
+                  <span className="text-sm text-gray-500">Drawer</span>
+                  <p>
+                    {p.drawer_number ? (
+                      <a
+                        href={`/drawers/${p.drawer_number}`}
+                        className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                      >
+                        Drawer {p.drawer_number}
+                      </a>
+                    ) : (
+                      <span className="text-gray-400 text-sm">
+                        Not assigned
+                      </span>
+                    )}
+                  </p>
+                </div>
               </div>
             </div>
             {p.description && (
