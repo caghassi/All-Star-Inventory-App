@@ -1,12 +1,10 @@
 "use client";
 
 import type { Product } from "@/lib/types";
-import DeleteButton from "./DeleteButton";
-import PrintLabelButton from "./PrintLabelButton";
 
 export default function ProductTable({ products }: { products: Product[] }) {
   return (
-    <div className="overflow-x-auto border border-gray-200 rounded-lg">
+    <div className="border border-gray-200 rounded-lg overflow-hidden">
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-gray-50 border-b border-gray-200">
@@ -22,7 +20,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
             <th className="text-right px-3 py-2 text-xs font-medium text-gray-600 uppercase tracking-wide hidden sm:table-cell">
               Price
             </th>
-            <th className="px-3 py-2 w-8" aria-label="Actions"></th>
+            <th className="px-3 py-2 w-6" aria-hidden="true"></th>
           </tr>
         </thead>
         <tbody>
@@ -37,12 +35,16 @@ export default function ProductTable({ products }: { products: Product[] }) {
             return (
               <tr
                 key={product.id}
-                className="border-b border-gray-100 last:border-0 hover:bg-gray-50"
+                className="border-b border-gray-100 last:border-0 hover:bg-gray-50 cursor-pointer"
+                onClick={() => {
+                  window.location.href = `/products/${product.id}`;
+                }}
               >
                 <td className="px-3 py-2">
                   <a
                     href={`/products/${product.id}`}
                     className="flex items-center gap-3 min-w-0"
+                    onClick={(e) => e.stopPropagation()}
                   >
                     {product.image_url ? (
                       <img
@@ -75,12 +77,9 @@ export default function ProductTable({ products }: { products: Product[] }) {
                 </td>
                 <td className="px-3 py-2 text-center hidden sm:table-cell">
                   {product.drawer_number ? (
-                    <a
-                      href={`/drawers/${product.drawer_number}`}
-                      className="inline-block px-2 py-0.5 rounded text-xs bg-blue-50 text-blue-700 hover:bg-blue-100"
-                    >
+                    <span className="inline-block px-2 py-0.5 rounded text-xs bg-blue-50 text-blue-700">
                       #{product.drawer_number}
-                    </a>
+                    </span>
                   ) : (
                     <span className="text-gray-300 text-sm">—</span>
                   )}
@@ -95,41 +94,21 @@ export default function ProductTable({ products }: { products: Product[] }) {
                 <td className="px-3 py-2 text-right text-sm text-gray-700 hidden sm:table-cell">
                   ${Number(product.price).toFixed(2)}
                 </td>
-                <td className="px-2 py-2 text-right">
-                  <details className="relative inline-block text-left">
-                    <summary className="list-none cursor-pointer p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                      >
-                        <circle cx="12" cy="5" r="1.5" />
-                        <circle cx="12" cy="12" r="1.5" />
-                        <circle cx="12" cy="19" r="1.5" />
-                      </svg>
-                      <span className="sr-only">Actions</span>
-                    </summary>
-                    <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10 py-1 text-sm">
-                      <a
-                        href={`/products/${product.id}/edit`}
-                        className="block px-3 py-1.5 text-gray-700 hover:bg-gray-50"
-                      >
-                        Edit
-                      </a>
-                      <div className="px-3 py-1.5 hover:bg-gray-50">
-                        <PrintLabelButton product={product} />
-                      </div>
-                      <div className="px-3 py-1.5 hover:bg-gray-50">
-                        <DeleteButton productId={product.id} />
-                      </div>
-                    </div>
-                  </details>
+                <td className="px-2 py-2 text-right text-gray-400">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    className="inline-block"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
                 </td>
               </tr>
             );

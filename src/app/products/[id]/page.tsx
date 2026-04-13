@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Barcode from "@/components/Barcode";
 import InventoryAdjuster from "@/components/InventoryAdjuster";
 import DeleteButton from "@/components/DeleteButton";
+import PrintLabelButton from "@/components/PrintLabelButton";
 
 export const dynamic = "force-dynamic";
 
@@ -29,14 +30,15 @@ export default async function ProductDetailPage({
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between gap-3 flex-wrap">
         <h1 className="text-2xl font-bold text-gray-900">{p.name}</h1>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-3">
+          <PrintLabelButton product={p} />
           <a
             href={`/products/${p.id}/edit`}
             className="px-4 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 transition-colors"
           >
-            Edit Product
+            Edit
           </a>
           <DeleteButton productId={p.id} />
         </div>
