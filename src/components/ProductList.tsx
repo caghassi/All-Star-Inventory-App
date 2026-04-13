@@ -6,7 +6,7 @@ import ProductTable from "./ProductTable";
 import ProductCards from "./ProductCard";
 
 export default function ProductList({ products }: { products: Product[] }) {
-  const [view, setView] = useState<"table" | "cards">("table");
+  const [view, setView] = useState<"table" | "cards">("cards");
 
   return (
     <div>
