@@ -1,6 +1,7 @@
 "use client";
 
 import type { Product } from "@/lib/types";
+import { drawerName } from "@/lib/drawers";
 
 export default function ProductCards({ products }: { products: Product[] }) {
   return (
@@ -49,7 +50,7 @@ export default function ProductCards({ products }: { products: Product[] }) {
                   </span>
                   {product.drawer_number ? (
                     <span className="inline-block px-1.5 py-0.5 rounded text-xs bg-blue-50 text-blue-700">
-                      Drawer {product.drawer_number}
+                      {drawerName(product.drawer_number)}
                     </span>
                   ) : null}
                 </div>

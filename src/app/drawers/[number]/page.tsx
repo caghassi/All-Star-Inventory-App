@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Barcode from "@/components/Barcode";
 import DrawerTrueUp from "@/components/DrawerTrueUp";
 import PrintDrawerLabels from "@/components/PrintDrawerLabels";
-import { DRAWER_COUNT, drawerBarcodeValue } from "@/lib/drawers";
+import { DRAWER_COUNT, drawerBarcodeValue, drawerName } from "@/lib/drawers";
 
 export const dynamic = "force-dynamic";
 
@@ -53,7 +53,7 @@ export default async function DrawerDetailPage({
             ← All drawers
           </a>
           <h1 className="text-2xl font-bold text-gray-900 mt-1">
-            Drawer {drawerNumber}
+            {drawerName(drawerNumber)}
           </h1>
           <p className="text-sm text-gray-600 mt-1">
             {items.length} item{items.length === 1 ? "" : "s"} · {totalUnits}{" "}
@@ -79,7 +79,7 @@ export default async function DrawerDetailPage({
         <div className="border border-gray-200 rounded-lg p-8 text-center text-gray-500">
           <p>No products assigned to this drawer yet.</p>
           <p className="text-sm mt-2">
-            Edit a product and select Drawer {drawerNumber} to add it here.
+            Edit a product and select {drawerName(drawerNumber)} to add it here.
           </p>
         </div>
       ) : (
@@ -88,7 +88,7 @@ export default async function DrawerDetailPage({
             <h2 className="font-semibold text-gray-900">Inventory True-Up</h2>
             <p className="text-xs text-gray-600 mt-1">
               Enter the actual count for each item and tap Set. Changes are
-              logged with reason "Drawer {drawerNumber} true-up".
+              logged with reason "{drawerName(drawerNumber)} true-up".
             </p>
           </div>
           <ul className="divide-y divide-gray-100">

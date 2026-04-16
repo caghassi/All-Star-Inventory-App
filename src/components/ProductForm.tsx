@@ -6,6 +6,7 @@ import { createProduct, updateProduct } from "@/lib/actions";
 import type { Product } from "@/lib/types";
 import Barcode from "./Barcode";
 import ImageUpload from "./ImageUpload";
+import { DRAWER_COUNT, drawerName } from "@/lib/drawers";
 
 interface ProductFormProps {
   product?: Product;
@@ -101,9 +102,9 @@ export default function ProductForm({ product }: ProductFormProps) {
           className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">— No drawer assigned —</option>
-          {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
+          {Array.from({ length: DRAWER_COUNT }, (_, i) => i + 1).map((n) => (
             <option key={n} value={n}>
-              Drawer {n}
+              {drawerName(n)}
             </option>
           ))}
         </select>

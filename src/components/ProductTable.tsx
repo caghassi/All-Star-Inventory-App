@@ -1,6 +1,7 @@
 "use client";
 
 import type { Product } from "@/lib/types";
+import { drawerName } from "@/lib/drawers";
 
 export default function ProductTable({ products }: { products: Product[] }) {
   return (
@@ -68,7 +69,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
                       {product.drawer_number && (
                         <div className="mt-0.5 sm:hidden">
                           <span className="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
-                            Drawer {product.drawer_number}
+                            {drawerName(product.drawer_number)}
                           </span>
                         </div>
                       )}
@@ -78,7 +79,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
                 <td className="px-3 py-2 text-center hidden sm:table-cell">
                   {product.drawer_number ? (
                     <span className="inline-block px-2 py-0.5 rounded text-xs bg-blue-50 text-blue-700">
-                      #{product.drawer_number}
+                      {drawerName(product.drawer_number)}
                     </span>
                   ) : (
                     <span className="text-gray-300 text-sm">—</span>

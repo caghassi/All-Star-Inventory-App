@@ -1,4 +1,14 @@
-export const DRAWER_COUNT = 20;
+export const DRAWER_COUNT = 21;
+
+/** Custom names for specific drawers. Drawers without a label show "Drawer N". */
+const DRAWER_LABELS: Record<number, string> = {
+  21: "Plaques",
+};
+
+/** Human-readable drawer name, e.g. "Drawer 3" or "Plaques". */
+export function drawerName(n: number): string {
+  return DRAWER_LABELS[n] ?? `Drawer ${n}`;
+}
 
 export function drawerBarcodeValue(n: number): string {
   return `DRAWER-${String(n).padStart(2, "0")}`;

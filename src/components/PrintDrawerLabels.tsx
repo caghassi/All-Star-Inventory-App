@@ -1,6 +1,6 @@
 "use client";
 
-import { drawerBarcodeValue } from "@/lib/drawers";
+import { drawerBarcodeValue, drawerName } from "@/lib/drawers";
 
 interface PrintDrawerLabelsProps {
   drawers: number[];
@@ -22,8 +22,7 @@ export default function PrintDrawerLabels({
         (n, i) => `
       <section class="label">
         <div class="left">
-          <div class="heading">DRAWER</div>
-          <div class="number">${n}</div>
+          <div class="name">${drawerName(n)}</div>
         </div>
         <div class="right">
           <svg id="bc-${i}"></svg>
@@ -79,18 +78,12 @@ export default function PrintDrawerLabels({
             flex-shrink: 0;
             width: 1.1in;
           }
-          .heading {
-            font-size: 8pt;
-            letter-spacing: 0.12em;
-            color: #000;
-            font-weight: 600;
-            line-height: 1;
-          }
-          .number {
-            font-size: 44pt;
+          .name {
+            font-size: 18pt;
             font-weight: 900;
-            line-height: 1;
-            margin-top: 2px;
+            line-height: 1.1;
+            text-align: center;
+            word-break: break-word;
           }
           .right {
             flex: 1;

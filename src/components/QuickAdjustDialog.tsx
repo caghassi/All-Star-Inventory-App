@@ -8,6 +8,7 @@ import {
   OTHER_REASON,
 } from "@/lib/adjustment-reasons";
 import Barcode from "./Barcode";
+import { drawerName } from "@/lib/drawers";
 
 interface QuickAdjustDialogProps {
   product: Product;
@@ -98,7 +99,7 @@ export default function QuickAdjustDialog({
                   href={`/drawers/${product.drawer_number}`}
                   className="inline-block text-sm px-2 py-0.5 rounded bg-blue-50 text-blue-700 hover:bg-blue-100"
                 >
-                  Drawer {product.drawer_number}
+                  {drawerName(product.drawer_number)}
                 </a>
               ) : (
                 <span className="text-xs text-gray-400">No drawer</span>

@@ -1,7 +1,7 @@
 import { getSupabase, isConfigured } from "@/lib/supabase";
 import Barcode from "@/components/Barcode";
 import PrintDrawerLabels from "@/components/PrintDrawerLabels";
-import { DRAWER_COUNT, drawerBarcodeValue } from "@/lib/drawers";
+import { DRAWER_COUNT, drawerBarcodeValue, drawerName } from "@/lib/drawers";
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +69,7 @@ export default async function DrawersPage() {
             >
               <div className="flex items-center justify-between mb-2">
                 <h2 className="text-lg font-semibold text-gray-900">
-                  Drawer {n}
+                  {drawerName(n)}
                 </h2>
                 <span className="text-xs text-gray-500">
                   {s.productCount} item{s.productCount === 1 ? "" : "s"}

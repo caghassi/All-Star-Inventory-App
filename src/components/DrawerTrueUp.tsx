@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { setQuantity } from "@/lib/actions";
 import type { Product } from "@/lib/types";
+import { drawerName } from "@/lib/drawers";
 
 interface DrawerTrueUpProps {
   product: Product;
@@ -31,7 +32,7 @@ export default function DrawerTrueUp({
     const result = await setQuantity(
       product.id,
       parsed,
-      `Drawer ${drawerNumber} true-up`
+      `${drawerName(drawerNumber)} true-up`
     );
 
     if (result?.error) {

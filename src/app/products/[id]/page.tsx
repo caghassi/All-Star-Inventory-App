@@ -5,6 +5,7 @@ import Barcode from "@/components/Barcode";
 import InventoryAdjuster from "@/components/InventoryAdjuster";
 import DeleteButton from "@/components/DeleteButton";
 import PrintLabelButton from "@/components/PrintLabelButton";
+import { drawerName } from "@/lib/drawers";
 
 export const dynamic = "force-dynamic";
 
@@ -94,7 +95,7 @@ export default async function ProductDetailPage({
                         href={`/drawers/${p.drawer_number}`}
                         className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
                       >
-                        Drawer {p.drawer_number}
+                        {drawerName(p.drawer_number!)}
                       </a>
                     ) : (
                       <span className="text-gray-400 text-sm">
